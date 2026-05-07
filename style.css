@@ -7,9 +7,10 @@
 body {
     background-color: #000;
     overflow-x: hidden;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
+/* HERO */
 .scroll-container {
     height: 500vh;
     position: relative;
@@ -55,7 +56,6 @@ canvas {
     mix-blend-mode: screen;
 }
 
-/* Overlay geral */
 .hero-overlay {
     position: absolute;
     inset: 0;
@@ -63,7 +63,6 @@ canvas {
     pointer-events: none;
 }
 
-/* Topo */
 .hero-top {
     position: absolute;
     top: 18px;
@@ -76,28 +75,15 @@ canvas {
     display: block;
 }
 
-/* Centro */
-.hero-center-copy {
-    position: absolute;
-    left: 50%;
-    bottom: 58px;
-    transform: translateX(-50%);
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .hero-left-content {
     position: absolute;
     left: 72px;
-    top: 46%;
+    top: 36%;
     transform: translateY(-50%);
     z-index: 4;
     max-width: 520px;
 }
 
-/* TÍTULO GRANDE */
 .hero-title {
     color: #ffffff;
     font-size: clamp(2rem, 6vw, 6rem);
@@ -111,7 +97,6 @@ canvas {
     color: #c7dbb7;
 }
 
-/* SUBTÍTULO */
 .hero-subtitle {
     margin-top: 30px;
     color: rgba(255, 255, 255, 0.85);
@@ -120,27 +105,30 @@ canvas {
     text-transform: uppercase;
 }
 
-/* BOTÃO GRANDE */
 .hero-cta {
-    margin-top: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    
-    min-width: 240px;
-    height: 60px;
+  position: fixed;
+  top: 28px;
+  right: 58px;
+  z-index: 20;
 
-    border: 2px solid white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 26px;
-    letter-spacing: 0.05em;
+  width: 228px;
+  height: 50px;
+  border-radius: 40px;
+  overflow: hidden;
 
-    background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 
-    transition: all 0.3s ease;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(113, 108, 123, 0.15);
 }
 
 .hero-cta:hover {
@@ -148,13 +136,67 @@ canvas {
     transform: scale(1.03);
 }
 
+.hero-cta-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+
+  background: #c7dbb782;
+
+  transition: transform 0.5s ease, background 0.3s ease;
+}
+
+.hero-cta-text {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  height: 50px;
+}
+
+.hero-cta-text span {
+  display: inline-block;
+  line-height: 50px;
+  transition: transform 0.3s ease;
+}
+
+.hero-cta:hover .hero-cta-bg {
+  transform: scale(1.05);
+  background: #897460;
+}
+
+.hero-cta:hover .hero-cta-text span {
+  transform: translateY(-2px);
+}
+
+.hero-cta-text span:nth-child(odd) {
+  transition-delay: 0.05s;
+}
+
+.hero-cta-text span:nth-child(even) {
+  transition-delay: 0.1s;
+}
+
+.hero-center-copy {
+    position: absolute;
+    left: 50%;
+    bottom: 58px;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .discover-text {
-    color: #ffffff;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 900;
-    line-height: 1.05;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.05;
     margin-bottom: 18px;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
@@ -174,7 +216,6 @@ canvas {
     opacity: 0.95;
 }
 
-/* Rodapé */
 .hero-bottom {
     position: absolute;
     right: 32px;
@@ -182,6 +223,252 @@ canvas {
     pointer-events: auto;
 }
 
+/* TAGLINES / RAILS */
+.taglines-section {
+    position: relative;
+    z-index: 8;
+    margin-top: -65vh;
+    background: #ffffff;
+    overflow: hidden;
+    padding: 36px 0 48px;
+}
+
+.taglines-rails {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.rail {
+    position: relative;
+    overflow: hidden;
+    height: 128px;
+}
+
+.rail-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    will-change: transform;
+}
+
+.rail-group {
+    display: flex;
+    align-items: center;
+    height: 128px;
+    gap: 28px;
+    padding-right: 28px;
+    flex: 0 0 auto;
+}
+
+.rail-item {
+    width: 25vw;
+    max-width: 396px;
+    min-width: 220px;
+    aspect-ratio: 3;
+    flex: 0 0 auto;
+    overflow: hidden;
+    background: #dcdcdc;
+}
+
+.rail-item img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.rail-placeholder {
+    background: #d9d9d9;
+}
+
+.rail-title {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    color: #111;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(80px, 10vw, 105px);
+    transform: scaleY(1.5);
+    line-height: 0.75;
+    letter-spacing: -0.06em;
+    padding: 0 8px;
+    height: 128px;
+}
+
+.rail-title .fx-char {
+  display: inline-block;
+  font-weight: inherit;
+}
+
+.products-section {
+  position: relative;
+  z-index: 9;
+  background: #f3f3f3;
+  padding: 120px 6vw 140px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.product-card {
+  position: relative;
+  text-align: center;
+}
+
+.product-link {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-number {
+  width: 70%;
+  margin: 0 auto;
+  font-family: "Saira Condensed", sans-serif;
+  font-size: clamp(110px, 14vw, 240px);
+  font-weight: 700;
+  line-height: 0.75;
+  color: transparent;
+  -webkit-text-stroke: 2px #111;
+  opacity: 0.9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-link:hover .product-number {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.product-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin: -42% auto 0;
+  z-index: 2;
+  transition: transform 0.45s ease;
+}
+
+.product-link:hover .product-image {
+  transform: translateY(-10px) scale(1.03);
+}
+
+.product-info {
+  margin-top: 40px;
+  color: #111;
+  font-family: "Inter", monospace;
+  font-size: 14px;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.product-button {
+  position: relative;
+  margin-top: 70px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 229px;
+  height: 42px;
+  border-radius: 40px;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.product-button span {
+  position: absolute;
+  inset: 0;
+  background: var(--btn-bg);
+  border-radius: 40px;
+  transition: transform 0.5s ease;
+}
+
+.product-button {
+  isolation: isolate;
+}
+
+.product-button::after {
+  content: "Adicionar ao carrinho";
+  position: relative;
+  z-index: 2;
+}
+
+.product-button:hover span {
+  transform: scale(1.06);
+}
+
+.product-button {
+  font-size: 0;
+}
+
+@media (max-width: 900px) {
+  .products-section {
+    padding: 80px 20px 100px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 90px;
+  }
+
+  .product-number {
+    font-size: 140px;
+  }
+
+  .product-image {
+    max-width: 420px;
+  }
+
+  .product-button {
+    margin-top: 40px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+    .taglines-section {
+        margin-top: -45vh;
+        padding: 24px 0 32px;
+    }
+
+    .taglines-rails {
+        gap: 10px;
+    }
+
+    .rail {
+        height: 110px;
+    }
+
+    .rail-group {
+        gap: 14px;
+        padding-right: 14px;
+    }
+
+    .rail-item {
+        width: 48vw;
+        min-width: 180px;
+    }
+
+    .rail-title {
+        height: 110px;
+        font-size: clamp(58px, 16vw, 118px);
+        padding: 0 6px;
+    }
+}
 
 @media (max-width: 768px) {
     .hero-top {
@@ -193,23 +480,46 @@ canvas {
         width: 110px;
     }
 
-    .hero-center {
-        width: calc(100vw - 40px);
+    .hero-left-content {
+        left: 20px;
+        max-width: 300px;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .hero-subtitle {
+        font-size: 14px;
+    }
+
+
+    .hero-cta {
+      top: auto;
+      right: 20px;
+      left: 20px;
+      bottom: 15px;
+      width: auto;
+    }
+
+
+    .hero-center-copy {
+        bottom: 34px;
+    }
+
+    .discover-text {
+        font-size: 14px;
+        margin-bottom: 14px;
+    }
+
+    .chevron {
+        width: 17px;
+        height: 12px;
     }
 
     .hero-bottom {
         left: 20px;
         right: 20px;
         bottom: 20px;
-    }
-
-    .buy-button {
-        width: 100%;
-        min-width: unset;
-    }
-
-    .arrow {
-        width: 20px;
-        height: 20px;
     }
 }

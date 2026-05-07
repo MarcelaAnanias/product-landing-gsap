@@ -1,5 +1,8 @@
 gsap.registerPlugin(ScrollTrigger);
 
+/* =========================
+   HERO ELEMENTS
+========================= */
 const canvas = document.getElementById("hero-canvas");
 const context = canvas.getContext("2d");
 const heroImage = document.getElementById("hero-image");
@@ -12,6 +15,47 @@ const heroSubtitle = document.querySelector(".hero-subtitle");
 const heroCTA = document.querySelector(".hero-cta");
 const heroCenterCopy = document.querySelector(".hero-center-copy");
 
+/* =========================
+   RAIL TITLES -> SPLIT CHARS
+========================= */
+document.querySelectorAll(".rail-title").forEach((title) => {
+  const word = (title.dataset.word || title.textContent || "").trim();
+  title.innerHTML = "";
+
+  [...word].forEach((char) => {
+    const span = document.createElement("span");
+    span.classList.add("fx-char");
+    span.textContent = char === " " ? "\u00A0" : char;
+    title.appendChild(span);
+  });
+
+  const chars = title.querySelectorAll(".fx-char");
+
+  const wordWeightsMap = {
+    "air": [900, 900, 900],
+    "force": [900, 900, 900, 900, 900],
+    "edition": [800, 800, 800, 800, 700, 700, 700, 700],
+    "limited": [600, 600, 600, 600, 600, 600, 600]
+  };
+
+  const weights = wordWeightsMap[word.toLowerCase()] || [];
+
+  chars.forEach((char, index) => {
+    const weight = weights[index] || 700;
+    char.style.fontWeight = weight;
+
+    if (weight >= 800) {
+      char.style.transform = "scaleY(1.02)";
+    } else if (weight <= 500) {
+      char.style.transform = "scaleY(0.96)";
+    } else {
+      char.style.transform = "scaleY(1)";
+    }
+  });
+});
+/* =========================
+   HERO IMAGE SEQUENCE
+========================= */
 const frameCount = 400;
 
 const imageSequence = {
@@ -71,11 +115,14 @@ setCanvasSize();
 window.addEventListener("resize", () => {
   setCanvasSize();
   render();
+  ScrollTrigger.refresh();
 });
 
 images[0].onload = render;
 
-/* Piscar dos 3 chevrons */
+/* =========================
+   CHEVRONS BLINK
+========================= */
 gsap.to(".scroll-indicator", {
   opacity: 0.45,
   duration: 0.9,
@@ -84,7 +131,9 @@ gsap.to(".scroll-indicator", {
   ease: "power1.inOut"
 });
 
-/* Animações de entrada */
+/* =========================
+   HERO ENTRANCE
+========================= */
 gsap.from(heroTitle, {
   y: 40,
   opacity: 0,
@@ -100,7 +149,8 @@ gsap.from(heroSubtitle, {
   ease: "power3.out"
 });
 
-gsap.fromTo(heroCTA,
+gsap.fromTo(
+  heroCTA,
   {
     y: 20,
     opacity: 0
@@ -114,7 +164,9 @@ gsap.fromTo(heroCTA,
   }
 );
 
-/* Timeline principal do scroll */
+/* =========================
+   HERO SCROLL TIMELINE
+========================= */
 const tl = gsap.timeline({
   scrollTrigger: {
     trigger: ".scroll-container",
@@ -145,40 +197,46 @@ tl.fromTo(cloud, {
 tl.to(heroImage, {
   opacity: 0,
   duration: 0.1,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(canvas, {
   opacity: 1,
   duration: 0.1,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(cloud, {
   opacity: 0,
   duration: 0.05,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.28);
 
 tl.to(logo, {
-  opacity: 0,
+  opacity: 1,
   y: -20,
   duration: 0.18,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(heroTitle, {
   opacity: 0,
   y: -30,
   duration: 0.12,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(heroSubtitle, {
   opacity: 0,
   y: -20,
   duration: 0.12,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(heroCTA, {
@@ -186,20 +244,23 @@ tl.to(heroCTA, {
   y: 20,
   duration: 0.12,
   ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(heroCenterCopy, {
   opacity: 0,
   y: 20,
   duration: 0.12,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(buyButton, {
   opacity: 0,
   y: 20,
   duration: 0.12,
-  ease: "none"
+  ease: "none",
+  immediateRender: false
 }, 0.08);
 
 tl.to(imageSequence, {
@@ -209,3 +270,50 @@ tl.to(imageSequence, {
   duration: 0.72,
   onUpdate: render
 }, 0.18);
+
+/* =========================
+   TAGLINES RAILS - SLOWER
+========================= */
+function setupRails() {
+  gsap.utils.toArray(".rail").forEach((rail) => {
+    const track = rail.querySelector(".rail-track");
+    const firstGroup = rail.querySelector(".rail-group");
+
+    if (!track || !firstGroup) return;
+
+    const groupWidth = firstGroup.offsetWidth;
+    const direction = rail.classList.contains("rail-left") ? -1 : 1;
+
+    const fromX = direction === 1 ? 0 : -groupWidth * 0.35;
+    const toX = direction === 1 ? -groupWidth * 0.35 : 0;
+
+    gsap.set(track, { x: fromX });
+
+    gsap.to(track, {
+      x: toX,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".taglines-section",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1.2
+      }
+    });
+  });
+}
+
+gsap.utils.toArray(".product-card").forEach((card, index) => {
+  gsap.from(card, {
+    y: 60,
+    opacity: 0,
+    duration: 0.8,
+    delay: index * 0.08,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: card,
+      start: "top 85%"
+    }
+  });
+});
+
+setupRails();
